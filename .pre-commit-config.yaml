@@ -1,0 +1,35 @@
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.14.2
+    hooks:
+      - id: ruff
+        name: Run ruff linter
+        args: ['--fix', '.']
+        language: python
+
+      - id: ruff-format
+        name: Run ruff formatter
+        args: ['.']
+        language: python
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-added-large-files
+        name: Check for large files
+        language: python
+
+      - id: check-merge-conflict
+        name: Check for merge conflicts
+        language: python
+
+      - id: end-of-file-fixer
+        name: End of File Fixer
+        language: python
+
+      - id: trailing-whitespace
+        name: Check trailing whitespace
+        language: python
+
+      - id: debug-statements
+        name: Check for debug statements

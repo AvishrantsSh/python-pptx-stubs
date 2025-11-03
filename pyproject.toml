@@ -4,16 +4,25 @@ version = "1.0.2"
 description = "Type stubs for python-pptx package"
 authors = [{ name = "Avishrant Sharma", email = "avishrants@gmail.com" }]
 requires-python = ">=3.12"
-license = "MIT"
+license = { text = "MIT" }
+readme = "README.md"
 dependencies = [
-    "python-pptx==1.0.2",
+    "python-pptx>=1.0.2",
 ]
 
 # This marks it as a PEP 561 type stub package
 classifiers = [
+  "License :: OSI Approved :: MIT License",
   "Typing :: Stubs Only",
   "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.12",
+  "Development Status :: 3 - Alpha",
 ]
+
+[project.urls]
+Homepage = "https://github.com/AvishrantsSh/python-pptx-stubs"
+Repository = "https://github.com/AvishrantsSh/python-pptx-stubs"
+Issues = "https://github.com/AvishrantsSh/python-pptx-stubs/issues"
 
 [dependency-groups]
 dev = [
