@@ -1,0 +1,45 @@
+[project]
+name = "python-pptx-stubs"
+version = "1.0.2"
+description = "Type stubs for python-pptx package"
+authors = [{ name = "Avishrant Sharma", email = "avishrants@gmail.com" }]
+requires-python = ">=3.12"
+license = "MIT"
+dependencies = [
+    "python-pptx==1.0.2",
+]
+
+# This marks it as a PEP 561 type stub package
+classifiers = [
+  "Typing :: Stubs Only",
+  "Programming Language :: Python :: 3",
+]
+
+[dependency-groups]
+dev = [
+    "ipython>=9.6.0",
+    "lxml-stubs>=0.5.1",
+    "pyright>=1.1.407",
+    "python-pptx>=1.0.2",
+]
+
+[build-system]
+requires = ["uv_build>=0.8.22,<0.9.0"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "pptx-stubs"
+module-root = ""
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+docstring-code-format = true
+skip-magic-trailing-comma = false
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "Q", "A", "I", "B", "S", "UP", "SIM", "RUF"]
+ignore = ["E501", "RUF012"]
