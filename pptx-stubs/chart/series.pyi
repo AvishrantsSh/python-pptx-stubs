@@ -1,6 +1,5 @@
-import sys
 from collections.abc import Generator, Sequence
-from typing import Any, Generic, TypeVar
+from typing import Any
 
 from pptx.chart.datalabel import DataLabels
 from pptx.chart.marker import Marker
@@ -10,11 +9,6 @@ from pptx.oxml.chart.chart import CT_PlotArea
 from pptx.oxml.chart.plot import BaseChartElement
 from pptx.oxml.chart.series import CT_SeriesComposite
 from pptx.util import lazyproperty
-
-if sys.version_info >= (3, 13):
-    _SeriesType = TypeVar("_SeriesType", bound="_BaseSeries", default=_BaseSeries)
-else:
-    _SeriesType = TypeVar("_SeriesType", bound="_BaseSeries")
 
 class _BaseSeries:
     """
@@ -181,10 +175,10 @@ class BubbleSeries(XySeries):
         """
         ...
 
-class SeriesCollection(Sequence[_SeriesType], Generic[_SeriesType]):
+class SeriesCollection[SeriesType: "_BaseSeries"](Sequence[SeriesType]):
     """
     A sequence of |Series| objects.
     """
     def __init__(self, parent_elm: CT_PlotArea | BaseChartElement) -> None: ...
-    def __getitem__(self, index: int) -> _SeriesType: ...
+    def __getitem__(self, index: int) -> SeriesType: ...
     def __len__(self) -> int: ...

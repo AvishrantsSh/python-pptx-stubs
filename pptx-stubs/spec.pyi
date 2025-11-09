@@ -1,0 +1,16 @@
+from typing import TypedDict
+
+from pptx.enum.shapes import MSO_SHAPE
+
+GRAPHIC_DATA_URI_CHART: str = ...
+GRAPHIC_DATA_URI_OLEOBJ: str = ...
+GRAPHIC_DATA_URI_TABLE: str = ...
+
+type AdjustmentValue = "tuple[str, int]"
+
+class ShapeSpec(TypedDict):
+    basename: str
+    avLst: tuple[AdjustmentValue, ...]
+    ...
+
+autoshape_types: dict[MSO_SHAPE, ShapeSpec] = ...

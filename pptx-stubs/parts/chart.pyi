@@ -1,9 +1,9 @@
-from typing import Generic, Self
+from typing import Self
 
 from pptx.chart.chart import Chart
 from pptx.chart.data import ChartData
-from pptx.chart.plot import _PlotType
-from pptx.chart.series import _SeriesType
+from pptx.chart.plot import _BasePlot
+from pptx.chart.series import _BaseSeries
 from pptx.enum.chart import XL_CHART_TYPE
 from pptx.opc.package import XmlPart
 from pptx.oxml.chart.chart import CT_ChartSpace
@@ -11,7 +11,7 @@ from pptx.package import Package
 from pptx.parts.embeddedpackage import EmbeddedXlsxPart
 from pptx.util import lazyproperty
 
-class ChartPart(XmlPart, Generic[_SeriesType, _PlotType]):
+class ChartPart[SeriesType: _BaseSeries, PlotType: _BasePlot](XmlPart):
     """A chart part.
 
     Corresponds to parts having partnames matching ppt/charts/chart[1-9][0-9]*.xml
@@ -27,7 +27,7 @@ class ChartPart(XmlPart, Generic[_SeriesType, _PlotType]):
         ...
 
     @lazyproperty
-    def chart(self) -> Chart[_SeriesType, _PlotType]:
+    def chart(self) -> Chart[SeriesType, PlotType]:
         """|Chart| object representing the chart in this part."""
         ...
 
@@ -39,9 +39,9 @@ class ChartPart(XmlPart, Generic[_SeriesType, _PlotType]):
         """
         ...
 
-class ChartWorkbook(Generic[_SeriesType, _PlotType]):
+class ChartWorkbook[SeriesType: _BaseSeries, PlotType: _BasePlot]:
     """Provides access to external chart data in a linked or embedded Excel workbook."""
-    def __init__(self, chartSpace: CT_ChartSpace, chart_part: ChartPart[_SeriesType, _PlotType]) -> None: ...
+    def __init__(self, chartSpace: CT_ChartSpace, chart_part: ChartPart[SeriesType, PlotType]) -> None: ...
     def update_from_xlsx_blob(self, xlsx_blob: bytes) -> None:
         """
         Replace the Excel spreadsheet in the related |EmbeddedXlsxPart| with

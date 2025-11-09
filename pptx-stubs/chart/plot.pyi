@@ -1,5 +1,4 @@
-import sys
-from typing import Generic, Self, TypeVar
+from typing import Self
 
 from pptx.chart.category import Categories
 from pptx.chart.chart import Chart
@@ -13,7 +12,7 @@ from pptx.chart.series import (
     RadarSeries,
     SeriesCollection,
     XySeries,
-    _SeriesType,
+    _BaseSeries,
 )
 from pptx.enum.chart import XL_CHART_TYPE
 from pptx.oxml.chart.plot import (
@@ -30,20 +29,13 @@ from pptx.oxml.chart.plot import (
 )
 from pptx.util import lazyproperty
 
-if sys.version_info >= (3, 13):
-    _PlotType = TypeVar("_PlotType", bound="_BasePlot", default=_BasePlot)
-    _XChart_Type = TypeVar("_XChart_Type", bound="BaseChartElement", default=BaseChartElement)
-else:
-    _PlotType = TypeVar("_PlotType", bound="_BasePlot")
-    _XChart_Type = TypeVar("_XChart_Type", bound="BaseChartElement")
-
-class _BasePlot(Generic[_XChart_Type, _SeriesType]):
+class _BasePlot[XChartType: BaseChartElement, SeriesType: _BaseSeries]:
     """
     A distinct plot that appears in the plot area of a chart. A chart may
     have more than one plot, in which case they appear as superimposed
     layers, such as a line plot appearing on top of a bar chart.
     """
-    def __init__(self, xChart: _XChart_Type, chart: Chart[_SeriesType, Self]) -> None: ...
+    def __init__(self, xChart: XChartType, chart: Chart[SeriesType, Self]) -> None: ...
     @lazyproperty
     def categories(self) -> Categories:
         """
@@ -59,7 +51,7 @@ class _BasePlot(Generic[_XChart_Type, _SeriesType]):
         ...
 
     @property
-    def chart(self) -> Chart[_SeriesType, Self]:
+    def chart(self) -> Chart[SeriesType, Self]:
         """
         The |Chart| object containing this plot.
         """
@@ -94,7 +86,7 @@ class _BasePlot(Generic[_XChart_Type, _SeriesType]):
         ...
 
     @lazyproperty
-    def series(self) -> SeriesCollection[_SeriesType]:
+    def series(self) -> SeriesCollection[SeriesType]:
         """
         A sequence of |Series| objects representing the series in this plot,
         in the order they appear in the plot.

@@ -1,10 +1,9 @@
 from collections.abc import Sequence
-from typing import Generic
 
 from pptx.chart.axis import CategoryAxis, DateAxis, ValueAxis
 from pptx.chart.legend import Legend
-from pptx.chart.plot import _PlotType
-from pptx.chart.series import SeriesCollection, _SeriesType
+from pptx.chart.plot import _BasePlot
+from pptx.chart.series import SeriesCollection, _BaseSeries
 from pptx.dml.chtfmt import ChartFormat
 from pptx.enum.chart import XL_CHART_TYPE
 from pptx.oxml.chart.chart import CT_ChartSpace, CT_PlotArea
@@ -14,7 +13,7 @@ from pptx.shared import ElementProxy, PartElementProxy
 from pptx.text.text import Font, TextFrame
 from pptx.util import lazyproperty
 
-class Chart(PartElementProxy, Generic[_SeriesType, _PlotType]):
+class Chart[SeriesType: _BaseSeries, PlotType: _BasePlot](PartElementProxy):
     """A chart object."""
     def __init__(self, chartSpace: CT_ChartSpace, chart_part: ChartPart) -> None: ...
     @property
@@ -98,7 +97,7 @@ class Chart(PartElementProxy, Generic[_SeriesType, _PlotType]):
         ...
 
     @lazyproperty
-    def plots(self) -> _Plots[_PlotType]:
+    def plots(self) -> _Plots[PlotType]:
         """
         The sequence of plots in this chart. A plot, called a *chart group*
         in the Microsoft API, is a distinct sequence of one or more series
@@ -121,7 +120,7 @@ class Chart(PartElementProxy, Generic[_SeriesType, _PlotType]):
         ...
 
     @lazyproperty
-    def series(self) -> SeriesCollection[_SeriesType]:
+    def series(self) -> SeriesCollection[SeriesType]:
         """
         A |SeriesCollection| object containing all the series in this
         chart. When the chart has multiple plots, all the series for the
@@ -176,7 +175,7 @@ class ChartTitle(ElementProxy):
         """
         ...
 
-class _Plots(Sequence[_PlotType]):
+class _Plots[PlotType: _BasePlot](Sequence[PlotType]):
     """
     The sequence of plots in a chart, such as a bar plot or a line plot. Most
     charts have only a single plot. The concept is necessary when two chart
@@ -184,5 +183,5 @@ class _Plots(Sequence[_PlotType]):
     a superimposed line plot.
     """
     def __init__(self, plotArea: CT_PlotArea, chart: Chart) -> None: ...
-    def __getitem__(self, index: slice | int) -> _PlotType: ...
+    def __getitem__(self, index: slice | int) -> PlotType: ...
     def __len__(self) -> int: ...

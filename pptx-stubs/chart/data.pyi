@@ -1,17 +1,7 @@
-import sys
 from collections.abc import Generator, Iterable, Sequence
-from typing import Any, Generic, TypeVar
+from typing import Any
 
-if sys.version_info >= (3, 13):
-    _ChartDataType = TypeVar("_SeriesDataType", bound="_BaseChartData", default=_BaseChartData)
-    _SeriesDataType = TypeVar("_SeriesDataType", bound="_BaseSeriesData", default=_BaseSeriesData)
-    _DataPointType = TypeVar("_DataPointType", bound="_BaseDataPoint", default=_BaseSeriesData)
-else:
-    _ChartDataType = TypeVar("_SeriesDataType", bound="_BaseChartData")
-    _SeriesDataType = TypeVar("_SeriesDataType", bound="_BaseSeriesData")
-    _DataPointType = TypeVar("_DataPointType", bound="_BaseDataPoint")
-
-class _BaseChartData(Sequence[_SeriesDataType]):
+class _BaseChartData[SeriesDataType: _BaseSeriesData](Sequence[SeriesDataType]):
     """Base class providing common members for chart data objects.
 
     A chart data object serves as a proxy for the chart data table that will be written to an
@@ -21,10 +11,10 @@ class _BaseChartData(Sequence[_SeriesDataType]):
     category charts and XY charts.
     """
     def __init__(self, number_format: str = ...) -> None: ...
-    def __getitem__(self, index: int) -> _SeriesDataType: ...
+    def __getitem__(self, index: int) -> SeriesDataType: ...
     def __len__(self) -> int: ...
-    def append(self, series: _SeriesDataType) -> None: ...
-    def data_point_offset(self, series: _SeriesDataType) -> int:
+    def append(self, series: SeriesDataType) -> None: ...
+    def data_point_offset(self, series: SeriesDataType) -> int:
         """
         The total integer number of data points appearing in the series of
         this chart that are prior to *series* in this sequence.
@@ -85,17 +75,17 @@ class _BaseChartData(Sequence[_SeriesDataType]):
         """
         ...
 
-class _BaseSeriesData(Sequence[_DataPointType], Generic[_ChartDataType, _DataPointType]):
+class _BaseSeriesData[ChartDataType: "_BaseChartData", DataPointType: "_BaseDataPoint"](Sequence[DataPointType]):
     """
     Base class providing common members for series data objects. A series
     data object serves as proxy for a series data column in the Excel
     worksheet. It operates as a sequence of data points, as well as providing
     access to series-level attributes like the series label.
     """
-    def __init__(self, chart_data: _ChartDataType, name: str | None, number_format: str | None) -> None: ...
-    def __getitem__(self, index: int) -> _DataPointType: ...
+    def __init__(self, chart_data: ChartDataType, name: str | None, number_format: str | None) -> None: ...
+    def __getitem__(self, index: int) -> DataPointType: ...
     def __len__(self) -> int: ...
-    def append(self, data_point: _DataPointType) -> None: ...
+    def append(self, data_point: DataPointType) -> None: ...
     @property
     def data_point_offset(self) -> int:
         """

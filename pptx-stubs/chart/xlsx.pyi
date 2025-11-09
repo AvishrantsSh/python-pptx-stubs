@@ -1,5 +1,3 @@
-from typing import str
-
 from pptx.chart.data import BubbleChartData, CategoryChartData, XyChartData, _BaseChartData
 
 class _BaseWorkbookWriter:
