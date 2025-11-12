@@ -1,0 +1,101 @@
+from typing import Any, Literal
+
+from pptx.enum.shapes import MSO_SHAPE_TYPE, PP_PLACEHOLDER
+from pptx.oxml.shapes.autoshape import CT_Shape
+from pptx.shapes.autoshape import Shape
+from pptx.shapes.graphfrm import GraphicFrame
+from pptx.shapes.picture import Picture
+from pptx.util import Length
+from pptx.enum.chart import XL_CHART_TYPE
+from pptx.chart.data import ChartData
+from typing import IO
+
+class _InheritsDimensions:
+    @property
+    def height(self) -> Length:
+        ...
+
+    @height.setter
+    def height(self, value: Length) -> None: ...
+    @property
+    def left(self) -> Length:
+        ...
+
+    @left.setter
+    def left(self, value: Length) -> None: ...
+    @property
+    def shape_type(self) -> Literal[MSO_SHAPE_TYPE.PLACEHOLDER]:
+        ...
+
+    @property
+    def top(self) -> Length:
+        ...
+
+    @top.setter
+    def top(self, value: Length) -> None: ...
+    @property
+    def width(self) -> Length:
+        ...
+
+    @width.setter
+    def width(self, value: Length) -> None: ...
+
+class _BaseSlidePlaceholder(_InheritsDimensions, Shape):
+    @property
+    def is_placeholder(self) -> Literal[True]:
+        ...
+
+    @property
+    def shape_type(self) -> Literal[MSO_SHAPE_TYPE.PLACEHOLDER]:
+        ...
+
+class BasePlaceholder(Shape):
+    @property
+    def idx(self) -> int:
+        ...
+
+    @property
+    def orient(self) -> str:
+        ...
+
+    @property
+    def ph_type(self) -> PP_PLACEHOLDER:
+        ...
+
+    @property
+    def sz(self) -> str:
+        ...
+
+class LayoutPlaceholder(_InheritsDimensions, Shape):
+    element: CT_Shape
+    ...
+
+class MasterPlaceholder(BasePlaceholder):
+    element: CT_Shape
+    ...
+
+class NotesSlidePlaceholder(_InheritsDimensions, Shape):
+    ...
+
+class SlidePlaceholder(_BaseSlidePlaceholder):
+    ...
+
+class ChartPlaceholder(_BaseSlidePlaceholder):
+    def insert_chart(self, chart_type: XL_CHART_TYPE, chart_data: ChartData) -> PlaceholderGraphicFrame:
+        ...
+
+class PicturePlaceholder(_BaseSlidePlaceholder):
+    def insert_picture(self, image_file: str | IO[bytes]) -> PlaceholderPicture:
+        ...
+
+class PlaceholderGraphicFrame(GraphicFrame):
+    @property
+    def is_placeholder(self) -> Literal[True]:
+        ...
+
+class PlaceholderPicture(_InheritsDimensions, Picture):
+    ...
+
+class TablePlaceholder(_BaseSlidePlaceholder):
+    def insert_table(self, rows: int, cols: int) -> PlaceholderGraphicFrame:
+        ...
