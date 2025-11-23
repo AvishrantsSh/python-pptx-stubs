@@ -124,7 +124,7 @@ class CT_BarChart(BaseChartElement):
 class CT_BarDir(BaseOxmlElement):
     @property
     def val(self) -> str:
-        """ST_BarDir type-converted value of ``val`` attribute, or |col|. Assigning the default value causes the attribute to be removed from the element."""
+        """ST_BarDir type-converted value of ``val`` attribute, or |ST_BarDir.COL| if not present. Assigning the default value causes the attribute to be removed from the element."""
         ...
 
     @val.setter
@@ -166,7 +166,7 @@ class CT_BubbleChart(BaseChartElement):
 class CT_BubbleScale(BaseChartElement):
     @property
     def val(self) -> int:
-        """ST_BubbleScale type-converted value of ``val`` attribute, or |100|. Assigning the default value causes the attribute to be removed from the element."""
+        """ST_BubbleScale type-converted value of ``val`` attribute, or |100| if not present. Assigning the default value causes the attribute to be removed from the element."""
         ...
 
     @val.setter
@@ -199,7 +199,7 @@ class CT_DoughnutChart(BaseChartElement):
 class CT_GapAmount(BaseOxmlElement):
     @property
     def val(self) -> int:
-        """ST_GapAmount type-converted value of ``val`` attribute, or |150|. Assigning the default value causes the attribute to be removed from the element."""
+        """ST_GapAmount type-converted value of ``val`` attribute, or |150| if not present. Assigning the default value causes the attribute to be removed from the element."""
         ...
 
     @val.setter
@@ -250,7 +250,7 @@ class CT_LineChart(BaseChartElement):
 class CT_Overlap(BaseOxmlElement):
     @property
     def val(self) -> int:
-        """ST_Overlap type-converted value of ``val`` attribute, or |0|. Assigning the default value causes the attribute to be removed from the element."""
+        """ST_Overlap type-converted value of ``val`` attribute, or |0| if not present. Assigning the default value causes the attribute to be removed from the element."""
         ...
 
     @val.setter

@@ -15,7 +15,7 @@ from pptx.oxml.xmlchemy import BaseOxmlElement
 class CT_Blip(BaseOxmlElement):
     @property
     def rEmbed(self) -> str | None:
-        """ST_RelationshipId type-converted value of ``r:embed`` attribute, or |None|. Assigning the default value causes the attribute to be removed from the element."""
+        """ST_RelationshipId type-converted value of ``r:embed`` attribute, or |None| if not present. Assigning the default value causes the attribute to be removed from the element."""
         ...
 
     @rEmbed.setter
@@ -161,7 +161,7 @@ class CT_GroupFillProperties(BaseOxmlElement): ...
 class CT_LinearShadeProperties(BaseOxmlElement):
     @property
     def ang(self) -> float | None:
-        """ST_PositiveFixedAngle type-converted value of ``ang`` attribute, or |None|. Assigning the default value causes the attribute to be removed from the element."""
+        """ST_PositiveFixedAngle type-converted value of ``ang`` attribute, or |None| if not present. Assigning the default value causes the attribute to be removed from the element."""
         ...
 
     @ang.setter
@@ -190,7 +190,7 @@ class CT_PatternFillProperties(BaseOxmlElement):
 
     @property
     def prst(self) -> MSO_PATTERN_TYPE | None:
-        """MSO_PATTERN_TYPE type-converted value of ``prst`` attribute, or |None|. Assigning the default value causes the attribute to be removed from the element."""
+        """MSO_PATTERN_TYPE type-converted value of ``prst`` attribute, or |None| if not present. Assigning the default value causes the attribute to be removed from the element."""
         ...
 
     @prst.setter
@@ -199,28 +199,28 @@ class CT_PatternFillProperties(BaseOxmlElement):
 class CT_RelativeRect(BaseOxmlElement):
     @property
     def l(self) -> float:
-        """ST_Percentage type-converted value of ``l`` attribute, or |0.0|. Assigning the default value causes the attribute to be removed from the element."""
+        """ST_Percentage type-converted value of ``l`` attribute, or |0.0| if not present. Assigning the default value causes the attribute to be removed from the element."""
         ...
 
     @l.setter
     def l(self, value: float) -> None: ...
     @property
     def t(self) -> float:
-        """ST_Percentage type-converted value of ``t`` attribute, or |0.0|. Assigning the default value causes the attribute to be removed from the element."""
+        """ST_Percentage type-converted value of ``t`` attribute, or |0.0| if not present. Assigning the default value causes the attribute to be removed from the element."""
         ...
 
     @t.setter
     def t(self, value: float) -> None: ...
     @property
     def r(self) -> float:
-        """ST_Percentage type-converted value of ``r`` attribute, or |0.0|. Assigning the default value causes the attribute to be removed from the element."""
+        """ST_Percentage type-converted value of ``r`` attribute, or |0.0| if not present. Assigning the default value causes the attribute to be removed from the element."""
         ...
 
     @r.setter
     def r(self, value: float) -> None: ...
     @property
     def b(self) -> float:
-        """ST_Percentage type-converted value of ``b`` attribute, or |0.0|. Assigning the default value causes the attribute to be removed from the element."""
+        """ST_Percentage type-converted value of ``b`` attribute, or |0.0| if not present. Assigning the default value causes the attribute to be removed from the element."""
         ...
 
     @b.setter

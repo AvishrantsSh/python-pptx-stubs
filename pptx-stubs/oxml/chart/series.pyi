@@ -1,3 +1,4 @@
+from lxml.etree import _Element
 from pptx.oxml.chart.datalabel import CT_DLbl, CT_DLbls
 from pptx.oxml.chart.marker import CT_Marker
 from pptx.oxml.chart.shared import CT_Boolean, CT_Boolean_Explicit, CT_Tx, CT_UnsignedInt
@@ -6,8 +7,12 @@ from pptx.oxml.xmlchemy import BaseOxmlElement
 
 class CT_AxDataSource(BaseOxmlElement):
     @property
-    def multiLvlStrRef(self) -> BaseOxmlElement | None: ...
-    def get_or_add_multiLvlStrRef(self) -> BaseOxmlElement: ...
+    def multiLvlStrRef(self) -> _Element | None:
+        """``<c:multiLvlStrRef>`` child element or |None| if not present."""
+        ...
+    def get_or_add_multiLvlStrRef(self) -> _Element:
+        """Return the ``<c:multiLvlStrRef>`` child element, newly added if not present."""
+        ...
     @property
     def lvls(self) -> list[CT_Lvl]: ...
 
@@ -46,7 +51,10 @@ class CT_Lvl(BaseOxmlElement):
 
 class CT_NumDataSource(BaseOxmlElement):
     @property
-    def numRef(self) -> BaseOxmlElement: ...
+    def numRef(self) -> _Element:
+        """Required ``<c:numRef>`` child element."""
+        ...
+
     @property
     def ptCount_val(self) -> int: ...
     def pt_v(self, idx: int) -> float | None: ...
@@ -180,7 +188,7 @@ class CT_SeriesComposite(BaseOxmlElement):
 
 class CT_StrVal_NumVal_Composite(BaseOxmlElement):
     @property
-    def v(self) -> BaseOxmlElement:
+    def v(self) -> _Element:
         """Required ``<c:v>`` child element."""
         ...
 

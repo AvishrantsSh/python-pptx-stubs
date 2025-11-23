@@ -69,7 +69,7 @@ class CT_Relationship(BaseOxmlElement):
     def target_ref(self, value: str) -> None: ...
     @property
     def targetMode(self) -> str:
-        """ST_TargetMode type-converted value of ``TargetMode`` attribute, or |INTERNAL|. Assigning the default value causes the attribute to be removed from the element."""
+        """ST_TargetMode type-converted value of ``TargetMode`` attribute, or |RELATIONSHIP_TARGET_MODE.INTERNAL| if not present. Assigning the default value causes the attribute to be removed from the element."""
         ...
 
     @targetMode.setter

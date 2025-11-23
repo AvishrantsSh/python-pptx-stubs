@@ -290,7 +290,7 @@ class CT_DateAx(BaseAxisElement):
 class CT_LblOffset(BaseOxmlElement):
     @property
     def val(self) -> int:
-        """ST_LblOffset type-converted value of ``val`` attribute, or |100|. Assigning the default value causes the attribute to be removed from the element."""
+        """ST_LblOffset type-converted value of ``val`` attribute, or |100| if not present. Assigning the default value causes the attribute to be removed from the element."""
         ...
 
     @val.setter
@@ -299,7 +299,7 @@ class CT_LblOffset(BaseOxmlElement):
 class CT_Orientation(BaseOxmlElement):
     @property
     def val(self) -> str:
-        """ST_Orientation type-converted value of ``val`` attribute, or |minMax|. Assigning the default value causes the attribute to be removed from the element."""
+        """ST_Orientation type-converted value of ``val`` attribute, or |ST_Orientation.MIN_MAX| if not present. Assigning the default value causes the attribute to be removed from the element."""
         ...
 
     @val.setter
@@ -350,7 +350,7 @@ class CT_Scaling(BaseOxmlElement):
 class CT_TickLblPos(BaseOxmlElement):
     @property
     def val(self) -> XL_TICK_LABEL_POSITION | None:
-        """XL_TICK_LABEL_POSITION type-converted value of ``val`` attribute, or |None|. Assigning the default value causes the attribute to be removed from the element."""
+        """XL_TICK_LABEL_POSITION type-converted value of ``val`` attribute, or |None| if not present. Assigning the default value causes the attribute to be removed from the element."""
         ...
 
     @val.setter
@@ -359,7 +359,7 @@ class CT_TickLblPos(BaseOxmlElement):
 class CT_TickMark(BaseOxmlElement):
     @property
     def val(self) -> XL_TICK_MARK:
-        """XL_TICK_MARK type-converted value of ``val`` attribute, or |XL_TICK_MARK.CROSS|. Assigning the default value causes the attribute to be removed from the element."""
+        """XL_TICK_MARK type-converted value of ``val`` attribute, or |XL_TICK_MARK.CROSS| if not present. Assigning the default value causes the attribute to be removed from the element."""
         ...
 
     @val.setter

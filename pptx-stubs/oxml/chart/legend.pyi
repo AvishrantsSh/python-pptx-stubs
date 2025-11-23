@@ -50,7 +50,7 @@ class CT_Legend(BaseOxmlElement):
 class CT_LegendPos(BaseOxmlElement):
     @property
     def val(self) -> XL_LEGEND_POSITION:
-        """XL_LEGEND_POSITION type-converted value of ``val`` attribute, or |XL_LEGEND_POSITION.RIGHT|. Assigning the default value causes the attribute to be removed from the element."""
+        """XL_LEGEND_POSITION type-converted value of ``val`` attribute, or |XL_LEGEND_POSITION.RIGHT| if not present. Assigning the default value causes the attribute to be removed from the element."""
         ...
 
     @val.setter

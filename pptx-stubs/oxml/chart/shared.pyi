@@ -1,3 +1,4 @@
+from lxml.etree import _Element
 from pptx.oxml.shapes.shared import CT_ShapeProperties
 from pptx.oxml.text import CT_TextBody
 from pptx.oxml.xmlchemy import BaseOxmlElement
@@ -5,7 +6,7 @@ from pptx.oxml.xmlchemy import BaseOxmlElement
 class CT_Boolean(BaseOxmlElement):
     @property
     def val(self) -> bool:
-        """XsdBoolean type-converted value of ``val`` attribute, or |True|. Assigning the default value causes the attribute to be removed from the element."""
+        """XsdBoolean type-converted value of ``val`` attribute, or |True| if not present. Assigning the default value causes the attribute to be removed from the element."""
         ...
 
     @val.setter
@@ -14,7 +15,7 @@ class CT_Boolean(BaseOxmlElement):
 class CT_Boolean_Explicit(BaseOxmlElement):
     @property
     def _val(self) -> bool:
-        """XsdBoolean type-converted value of ``val`` attribute, or |True|. Assigning the default value causes the attribute to be removed from the element."""
+        """XsdBoolean type-converted value of ``val`` attribute, or |True| if not present. Assigning the default value causes the attribute to be removed from the element."""
         ...
 
     @_val.setter
@@ -51,7 +52,7 @@ class CT_Layout(BaseOxmlElement):
 class CT_LayoutMode(BaseOxmlElement):
     @property
     def val(self) -> str:
-        """ST_LayoutMode type-converted value of ``val`` attribute, or |factor|. Assigning the default value causes the attribute to be removed from the element."""
+        """ST_LayoutMode type-converted value of ``val`` attribute, or |ST_LayoutMode.FACTOR| if not present. Assigning the default value causes the attribute to be removed from the element."""
         ...
 
     @val.setter
@@ -91,7 +92,7 @@ class CT_NumFmt(BaseOxmlElement):
     def formatCode(self, value: str) -> None: ...
     @property
     def sourceLinked(self) -> bool | None:
-        """XsdBoolean type-converted value of ``sourceLinked`` attribute, or |None|. Assigning the default value causes the attribute to be removed from the element."""
+        """XsdBoolean type-converted value of ``sourceLinked`` attribute, or |None| if not present. Assigning the default value causes the attribute to be removed from the element."""
         ...
 
     @sourceLinked.setter
@@ -124,11 +125,11 @@ class CT_Title(BaseOxmlElement):
 
 class CT_Tx(BaseOxmlElement):
     @property
-    def strRef(self) -> BaseOxmlElement | None:
+    def strRef(self) -> _Element | None:
         """``<c:strRef>`` child element or |None| if not present."""
         ...
 
-    def get_or_add_strRef(self) -> BaseOxmlElement:
+    def get_or_add_strRef(self) -> _Element:
         """Return the ``<c:strRef>`` child element, newly added if not present."""
         ...
 
