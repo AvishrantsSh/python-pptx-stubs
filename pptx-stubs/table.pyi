@@ -1,4 +1,4 @@
-from collections.abc import Iterator
+from collections.abc import Generator, Iterator
 
 from pptx.dml.fill import FillFormat
 from pptx.enum.text import MSO_VERTICAL_ANCHOR
@@ -11,356 +11,128 @@ from pptx.types import ProvidesPart
 from pptx.util import Length, lazyproperty
 
 class Table:
-    """A DrawingML table object.
-
-    Not intended to be constructed directly, use
-    :meth:`.Slide.shapes.add_table` to add a table to a slide.
-    """
+    _tbl: CT_Table
+    _graphic_frame: GraphicFrame
     def __init__(self, tbl: CT_Table, graphic_frame: GraphicFrame) -> None: ...
-    def cell(self, row_idx: int, col_idx: int) -> _Cell:
-        """Return cell at `row_idx`, `col_idx`.
-
-        Return value is an instance of |_Cell|. `row_idx` and `col_idx` are zero-based, e.g.
-        cell(0, 0) is the top, left cell in the table.
-        """
-        ...
-
+    def cell(self, row_idx: int, col_idx: int) -> _Cell: ...
     @lazyproperty
-    def columns(self) -> _ColumnCollection:
-        """|_ColumnCollection| instance for this table.
-
-        Provides access to |_Column| objects representing the table's columns. |_Column| objects
-        are accessed using list notation, e.g. `col = tbl.columns[0]`.
-        """
-        ...
-
+    def columns(self) -> _ColumnCollection: ...
     @property
-    def first_col(self) -> bool:
-        """When `True`, indicates first column should have distinct formatting.
-
-        Read/write. Distinct formatting is used, for example, when the first column contains row
-        headings (is a side-heading column).
-        """
-        ...
-
+    def first_col(self) -> bool: ...
     @first_col.setter
     def first_col(self, value: bool) -> None: ...
     @property
-    def first_row(self) -> bool:
-        """When `True`, indicates first row should have distinct formatting.
-
-        Read/write. Distinct formatting is used, for example, when the first row contains column
-        headings.
-        """
-        ...
-
+    def first_row(self) -> bool: ...
     @first_row.setter
     def first_row(self, value: bool) -> None: ...
     @property
-    def horz_banding(self) -> bool:
-        """When `True`, indicates rows should have alternating shading.
-
-        Read/write. Used to allow rows to be traversed more easily without losing track of which
-        row is being read.
-        """
-        ...
-
+    def horz_banding(self) -> bool: ...
     @horz_banding.setter
     def horz_banding(self, value: bool) -> None: ...
-    def iter_cells(self) -> Iterator[_Cell]:
-        """Generate _Cell object for each cell in this table.
-
-        Each grid cell is generated in left-to-right, top-to-bottom order.
-        """
-        ...
-
+    def iter_cells(self) -> Iterator[_Cell]: ...
     @property
-    def last_col(self) -> bool:
-        """When `True`, indicates the rightmost column should have distinct formatting.
-
-        Read/write. Used, for example, when a row totals column appears at the far right of the
-        table.
-        """
-        ...
-
+    def last_col(self) -> bool: ...
     @last_col.setter
     def last_col(self, value: bool) -> None: ...
     @property
-    def last_row(self) -> bool:
-        """When `True`, indicates the bottom row should have distinct formatting.
-
-        Read/write. Used, for example, when a totals row appears as the bottom row.
-        """
-        ...
-
+    def last_row(self) -> bool: ...
     @last_row.setter
     def last_row(self, value: bool) -> None: ...
-    def notify_height_changed(self) -> None:
-        """Called by a row when its height changes.
-
-        Triggers the graphic frame to recalculate its total height (as the sum of the row
-        heights).
-        """
-        ...
-
-    def notify_width_changed(self) -> None:
-        """Called by a column when its width changes.
-
-        Triggers the graphic frame to recalculate its total width (as the sum of the column
-        widths).
-        """
-        ...
-
+    def notify_height_changed(self) -> None: ...
+    def notify_width_changed(self) -> None: ...
     @property
-    def part(self) -> BaseSlidePart:
-        """The package part containing this table."""
-        ...
-
+    def part(self) -> BaseSlidePart: ...
     @lazyproperty
-    def rows(self) -> _RowCollection:
-        """|_RowCollection| instance for this table.
-
-        Provides access to |_Row| objects representing the table's rows. |_Row| objects are
-        accessed using list notation, e.g. `col = tbl.rows[0]`.
-        """
-        ...
-
+    def rows(self) -> _RowCollection: ...
     @property
-    def vert_banding(self) -> bool:
-        """When `True`, indicates columns should have alternating shading.
-
-        Read/write. Used to allow columns to be traversed more easily without losing track of
-        which column is being read.
-        """
-        ...
-
+    def vert_banding(self) -> bool: ...
     @vert_banding.setter
     def vert_banding(self, value: bool) -> None: ...
 
 class _Cell(Subshape):
-    """Table cell"""
+    _tc: CT_TableCell
     def __init__(self, tc: CT_TableCell, parent: ProvidesPart) -> None: ...
-    def __eq__(self, other: object) -> bool:
-        """|True| if this object proxies the same element as `other`.
-
-        Equality for proxy objects is defined as referring to the same XML element, whether or not
-        they are the same proxy object instance.
-        """
-        ...
-
+    def __eq__(self, other: object) -> bool: ...
     def __ne__(self, other: object) -> bool: ...
     @lazyproperty
-    def fill(self) -> FillFormat:
-        """|FillFormat| instance for this cell.
-
-        Provides access to fill properties such as foreground color.
-        """
-        ...
-
+    def fill(self) -> FillFormat: ...
     @property
-    def is_merge_origin(self) -> bool:
-        """True if this cell is the top-left grid cell in a merged cell."""
-        ...
-
+    def is_merge_origin(self) -> bool: ...
     @property
-    def is_spanned(self) -> bool:
-        """True if this cell is spanned by a merge-origin cell.
-
-        A merge-origin cell "spans" the other grid cells in its merge range, consuming their area
-        and "shadowing" the spanned grid cells.
-
-        Note this value is |False| for a merge-origin cell. A merge-origin cell spans other grid
-        cells, but is not itself a spanned cell.
-        """
-        ...
-
+    def is_spanned(self) -> bool: ...
     @property
-    def margin_left(self) -> Length:
-        """Left margin of cells.
-
-        Read/write. If assigned |None|, the default value is used, 0.1 inches for left and right
-        margins and 0.05 inches for top and bottom.
-        """
-        ...
-
+    def margin_left(self) -> Length: ...
     @margin_left.setter
     def margin_left(self, margin_left: Length | None) -> None: ...
     @property
-    def margin_right(self) -> Length:
-        """Right margin of cell."""
-        ...
-
+    def margin_right(self) -> Length: ...
     @margin_right.setter
     def margin_right(self, margin_right: Length | None) -> None: ...
     @property
-    def margin_top(self) -> Length:
-        """Top margin of cell."""
-        ...
-
+    def margin_top(self) -> Length: ...
     @margin_top.setter
     def margin_top(self, margin_top: Length | None) -> None: ...
     @property
-    def margin_bottom(self) -> Length:
-        """Bottom margin of cell."""
-        ...
-
+    def margin_bottom(self) -> Length: ...
     @margin_bottom.setter
     def margin_bottom(self, margin_bottom: Length | None) -> None: ...
-    def merge(self, other_cell: _Cell) -> None:
-        """Create merged cell from this cell to `other_cell`.
-
-        This cell and `other_cell` specify opposite corners of the merged cell range. Either
-        diagonal of the cell region may be specified in either order, e.g. self=bottom-right,
-        other_cell=top-left, etc.
-
-        Raises |ValueError| if the specified range already contains merged cells anywhere within
-        its extents or if `other_cell` is not in the same table as `self`.
-        """
-        ...
-
+    def merge(self, other_cell: _Cell) -> None: ...
     @property
-    def span_height(self) -> int:
-        """int count of rows spanned by this cell.
-
-        The value of this property may be misleading (often 1) on cells where `.is_merge_origin`
-        is not |True|, since only a merge-origin cell contains complete span information. This
-        property is only intended for use on cells known to be a merge origin by testing
-        `.is_merge_origin`.
-        """
-        ...
-
+    def span_height(self) -> int: ...
     @property
-    def span_width(self) -> int:
-        """int count of columns spanned by this cell.
-
-        The value of this property may be misleading (often 1) on cells where `.is_merge_origin`
-        is not |True|, since only a merge-origin cell contains complete span information. This
-        property is only intended for use on cells known to be a merge origin by testing
-        `.is_merge_origin`.
-        """
-        ...
-
-    def split(self) -> None:
-        """Remove merge from this (merge-origin) cell.
-
-        The merged cell represented by this object will be "unmerged", yielding a separate
-        unmerged cell for each grid cell previously spanned by this merge.
-
-        Raises |ValueError| when this cell is not a merge-origin cell. Test with
-        `.is_merge_origin` before calling.
-        """
-        ...
-
+    def span_width(self) -> int: ...
+    def split(self) -> None: ...
     @property
-    def text(self) -> str:
-        """Textual content of cell as a single string.
-
-        The returned string will contain a newline character (`"\\n"`) separating each paragraph
-        and a vertical-tab (`"\\v"`) character for each line break (soft carriage return) in the
-        cell's text.
-
-        Assignment to `text` replaces all text currently contained in the cell. A newline
-        character (`"\\n"`) in the assigned text causes a new paragraph to be started. A
-        vertical-tab (`"\\v"`) character in the assigned text causes a line-break (soft
-        carriage-return) to be inserted. (The vertical-tab character appears in clipboard text
-        copied from PowerPoint as its encoding of line-breaks.)
-        """
-        ...
-
+    def text(self) -> str: ...
     @text.setter
     def text(self, text: str) -> None: ...
     @property
-    def text_frame(self) -> TextFrame:
-        """|TextFrame| containing the text that appears in the cell."""
-        ...
-
+    def text_frame(self) -> TextFrame: ...
     @property
-    def vertical_anchor(self) -> MSO_VERTICAL_ANCHOR | None:
-        """Vertical alignment of this cell.
-
-        This value is a member of the :ref:`MsoVerticalAnchor` enumeration or |None|. A value of
-        |None| indicates the cell has no explicitly applied vertical anchor setting and its
-        effective value is inherited from its style-hierarchy ancestors.
-
-        Assigning |None| to this property causes any explicitly applied vertical anchor setting to
-        be cleared and inheritance of its effective value to be restored.
-        """
-        ...
-
+    def vertical_anchor(self) -> MSO_VERTICAL_ANCHOR | None: ...
     @vertical_anchor.setter
     def vertical_anchor(self, mso_anchor_idx: MSO_VERTICAL_ANCHOR | None) -> None: ...
 
 class _Column(Subshape):
-    """Table column"""
+    _parent: _ColumnCollection
+    _gridCol: CT_TableCol
     def __init__(self, gridCol: CT_TableCol, parent: _ColumnCollection) -> None: ...
     @property
-    def width(self) -> Length:
-        """Width of column in EMU."""
-        ...
-
+    def width(self) -> Length: ...
     @width.setter
     def width(self, width: Length) -> None: ...
 
 class _Row(Subshape):
-    """Table row"""
+    _parent: _RowCollection
+    _tr: CT_TableRow
     def __init__(self, tr: CT_TableRow, parent: _RowCollection) -> None: ...
     @property
-    def cells(self) -> _CellCollection:
-        """Read-only reference to collection of cells in row.
-
-        An individual cell is referenced using list notation, e.g. `cell = row.cells[0]`.
-        """
-        ...
-
+    def cells(self) -> _CellCollection: ...
     @property
-    def height(self) -> Length:
-        """Height of row in EMU."""
-        ...
-
+    def height(self) -> Length: ...
     @height.setter
     def height(self, height: Length) -> None: ...
 
 class _CellCollection(Subshape):
-    """Horizontal sequence of row cells"""
+    _parent: _Row
+    _tr: CT_TableRow
     def __init__(self, tr: CT_TableRow, parent: _Row) -> None: ...
-    def __getitem__(self, idx: int) -> _Cell:
-        """Provides indexed access, (e.g. 'cells[0]')."""
-        ...
-
-    def __iter__(self) -> Iterator[_Cell]:
-        """Provides iterability."""
-        ...
-
-    def __len__(self) -> int:
-        """Supports len() function (e.g. 'len(cells) == 1')."""
-        ...
+    def __getitem__(self, idx: int) -> _Cell: ...
+    def __iter__(self) -> Generator[_Cell]: ...
+    def __len__(self) -> int: ...
 
 class _ColumnCollection(Subshape):
-    """Sequence of table columns."""
+    _parent: Table
+    _tbl: CT_Table
     def __init__(self, tbl: CT_Table, parent: Table) -> None: ...
-    def __getitem__(self, idx: int) -> _Column:
-        """Provides indexed access, (e.g. 'columns[0]')."""
-        ...
-
-    def __len__(self) -> int:
-        """Supports len() function (e.g. 'len(columns) == 1')."""
-        ...
-
-    def notify_width_changed(self) -> None:
-        """Called by a column when its width changes. Pass along to parent."""
-        ...
+    def __getitem__(self, idx: int) -> _Column: ...
+    def __len__(self) -> int: ...
+    def notify_width_changed(self) -> None: ...
 
 class _RowCollection(Subshape):
-    """Sequence of table rows"""
+    _parent: Table
+    _tbl: CT_Table
     def __init__(self, tbl: CT_Table, parent: Table) -> None: ...
-    def __getitem__(self, idx: int) -> _Row:
-        """Provides indexed access, (e.g. 'rows[0]')."""
-        ...
-
-    def __len__(self) -> int:
-        """Supports len() function (e.g. 'len(rows) == 1')."""
-        ...
-
-    def notify_height_changed(self) -> None:
-        """Called by a row when its height changes. Pass along to parent."""
-        ...
+    def __getitem__(self, idx: int) -> _Row: ...
+    def __len__(self) -> int: ...
+    def notify_height_changed(self) -> None: ...

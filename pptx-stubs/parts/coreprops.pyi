@@ -6,21 +6,9 @@ from pptx.oxml.coreprops import CT_CoreProperties
 from pptx.package import Package
 
 class CorePropertiesPart(XmlPart):
-    """Corresponds to part named `/docProps/core.xml`.
-
-    Contains the core document properties for this document package.
-    """
-
     _element: CT_CoreProperties
     @classmethod
-    def default(cls, package: Package) -> CorePropertiesPart:
-        """Return default new |CorePropertiesPart| instance suitable as starting point.
-
-        This provides a base for adding core-properties to a package that doesn't yet
-        have any.
-        """
-        ...
-
+    def default(cls, package: Package) -> CorePropertiesPart: ...
     @property
     def author(self) -> str: ...
     @author.setter

@@ -4,22 +4,11 @@ from pptx.opc.package import XmlPart
 from pptx.util import Length
 
 class ProvidesExtents(Protocol):
-    """An object that has width and height."""
     @property
-    def height(self) -> Length:
-        """Distance between top and bottom extents of shape in EMUs."""
-        ...
-
+    def height(self) -> Length: ...
     @property
-    def width(self) -> Length:
-        """Distance between left and right extents of shape in EMUs."""
-        ...
+    def width(self) -> Length: ...
 
 class ProvidesPart(Protocol):
-    """An object that provides access to its XmlPart.
-
-    This type is for objects that need access to their part, possibly because they need access to
-    the package or related parts.
-    """
     @property
     def part(self) -> XmlPart: ...
