@@ -8,6 +8,8 @@ from pptx.types import ProvidesPart
 from pptx.util import lazyproperty
 
 class GroupShape(BaseShape):
+    _element: CT_GroupShape
+    _grpSp: CT_GroupShape
     def __init__(self, grpSp: CT_GroupShape, parent: ProvidesPart) -> None: ...
     @lazyproperty
     def click_action(self) -> ActionSetting: ...

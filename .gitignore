@@ -39,7 +39,6 @@ coverage.xml
 htmlcov/
 coverage/
 .cache/
-stub.py
 
 # Stub project specific
 # Keep only .pyi and metadata

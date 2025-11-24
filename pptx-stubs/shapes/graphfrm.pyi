@@ -13,6 +13,8 @@ from pptx.types import ProvidesPart
 from pptx.util import lazyproperty
 
 class GraphicFrame[SeriesType: _BaseSeries, PlotType: _BasePlot](BaseShape):
+    _element: CT_GraphicalObjectFrame
+    _graphicFrame: CT_GraphicalObjectFrame
     def __init__(self, graphicFrame: CT_GraphicalObjectFrame, parent: ProvidesPart) -> None: ...
     @property
     def chart(self) -> Chart[SeriesType, PlotType]: ...

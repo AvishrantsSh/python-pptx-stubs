@@ -4,7 +4,7 @@ from pptx.chart.axis import CategoryAxis, DateAxis, ValueAxis
 from pptx.chart.data import _BaseChartData
 from pptx.chart.legend import Legend
 from pptx.chart.plot import _BasePlot
-from pptx.chart.series import SeriesCollection, _BaseSeries
+from pptx.chart.series import SeriesCollection, _BaseCategorySeries, _BaseSeries
 from pptx.dml.chtfmt import ChartFormat
 from pptx.enum.chart import XL_CHART_TYPE
 from pptx.oxml.chart.chart import CT_ChartSpace, CT_PlotArea
@@ -15,6 +15,7 @@ from pptx.text.text import Font, TextFrame
 from pptx.util import lazyproperty
 
 class Chart[SeriesType: _BaseSeries, PlotType: _BasePlot](PartElementProxy):
+    _chartSpace: CT_ChartSpace
     def __init__(self, chartSpace: CT_ChartSpace, chart_part: ChartPart) -> None: ...
     @property
     def category_axis(self) -> CategoryAxis | DateAxis | ValueAxis: ...
@@ -46,7 +47,16 @@ class Chart[SeriesType: _BaseSeries, PlotType: _BasePlot](PartElementProxy):
     @property
     def value_axis(self) -> ValueAxis: ...
 
+DefaultChart = Chart[_BaseSeries | _BaseCategorySeries, _BasePlot]
+"""Type-checking alias.
+
+This symbol exists only in stubs and is not available at runtime.
+Do not import or reference it in production code. Always import this under
+`TYPE_CHECKING` guards.
+"""
+
 class ChartTitle(ElementProxy):
+    _title: CT_Title
     def __init__(self, title: CT_Title) -> None: ...
     @lazyproperty
     def format(self) -> ChartFormat: ...
@@ -58,6 +68,8 @@ class ChartTitle(ElementProxy):
     def text_frame(self) -> TextFrame: ...
 
 class _Plots[PlotType: _BasePlot](Sequence[PlotType]):
+    _plotArea: CT_PlotArea
+    _chart: Chart
     def __init__(self, plotArea: CT_PlotArea, chart: Chart) -> None: ...
     def __getitem__(self, index: slice | int) -> PlotType: ...
     def __len__(self) -> int: ...

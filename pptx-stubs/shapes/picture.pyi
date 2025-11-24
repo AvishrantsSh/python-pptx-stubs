@@ -9,6 +9,8 @@ from pptx.types import ProvidesPart
 from pptx.util import lazyproperty
 
 class _BasePicture(BaseShape):
+    _element: CT_Picture
+    _pic: CT_Picture
     def __init__(self, pic: CT_Picture, parent: ProvidesPart) -> None: ...
     @property
     def crop_bottom(self) -> float: ...

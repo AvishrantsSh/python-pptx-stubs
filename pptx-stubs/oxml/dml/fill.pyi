@@ -12,6 +12,15 @@ from pptx.oxml.dml.color import (
 from pptx.oxml.shapes.autoshape import CT_Path2D
 from pptx.oxml.xmlchemy import BaseOxmlElement
 
+type FillProperty = (
+    CT_NoFillProperties
+    | "CT_SolidColorFillProperties"
+    | "CT_GradientFillProperties"
+    | "CT_BlipFillProperties"
+    | "CT_PatternFillProperties"
+    | "CT_GroupFillProperties"
+)
+
 class CT_Blip(BaseOxmlElement):
     @property
     def rEmbed(self) -> str | None:
