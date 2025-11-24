@@ -1,6 +1,6 @@
 # python-pptx-stubs
 
-This package contains [type stubs](https://www.python.org/dev/peps/pep-0561/) to provide more precise static types and type inference for the [python-pptx](https://github.com/scanny/python-pptx) project. 
+This package contains [type stubs](https://www.python.org/dev/peps/pep-0561/) to provide more precise static types and type inference for the [python-pptx](https://github.com/scanny/python-pptx) project.
 
 **python-pptx** heavily relies on dynamic attribute generation and runtime magic for its functionality. This project aims to add type annotations for the most common patterns used in the parent library.
 
@@ -22,7 +22,7 @@ This project follows the same versioning as python-pptx where possible.
 
 | Stubs Version | python-pptx Version | Python Version | Status  |
 |---------------|---------------------|----------------|---------|
-| 1.0.2         | 1.0.2               | 3.12+          | Active  |
+| 1.0.2.post1   | 1.0.2               | 3.12+          | Active  |
 
 ## Usage
 
